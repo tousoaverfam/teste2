@@ -1,3 +1,3 @@
-function scrollToSection(id) {
-  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+function scrollToSection() {
+  document.getElementById("section2").scrollIntoView({ behavior: "smooth" });
 }
