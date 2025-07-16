@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #0f1b13;
+  color: #e0e0e0;
+  scroll-behavior: smooth;
+}
+
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #0f1b13;
+  padding: 2rem;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #9ae6b4;
+}
+
+.scroll-btn {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  background-color: #1a3d2f;
+  color: #e0e0e0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.scroll-btn:hover {
+  background-color: #2e5a44;
+}
+
+.conteudo {
+  padding: 4rem 2rem;
+  background-color: #16241b;
+  min-height: 100vh;
+  text-align: center;
+}
