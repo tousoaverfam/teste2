@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Restus</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-  <!-- Secção 1: Hero -->
-  <section id="hero">
-    <div class="container">
-      <h1>restus</h1>
-      <button onclick="scrollToSection('actions')">Let Him Cook</button>
-    </div>
-  </section>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>restus</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Secção 1 -->
+    <section class="hero">
+      <div class="container">
+        <h1 class="title">restus</h1>
+        <button class="scroll-btn" onclick="scrollToSection()">Let Him Cook</button>
+      </div>
+    </section>
 
-  <!-- Secção 2: Ações -->
-  <section id="actions">
-    <div class="container buttons">
-      <button class="action-btn">Ver Alimentos</button>
-      <button class="action-btn">Ver Receitas</button>
-    </div>
-  </section>
+    <!-- Secção 2 -->
+    <section class="section-dark" id="section2">
+      <div class="container">
+        <div class="button-group">
+          <button class="action-btn">Ver Alimentos</button>
+          <button class="action-btn">Ver Receitas</button>
+        </div>
+      </div>
+    </section>
 
-  <script src="js/script.js"></script>
-</body>
+    <script src="js/script.js"></script>
+  </body>
 </html>
