@@ -1,47 +1,78 @@
-body {
+/* Reset básico */
+* {
   margin: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: #0f1b13;
-  color: #e0e0e0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+  background-color: #0d1a16;
+  color: #f0f0f0;
+  line-height: 1.6;
   scroll-behavior: smooth;
 }
 
-.hero {
+section {
+  padding: 80px 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Secção 1 - Hero */
+#hero {
   height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
-  background-color: #0f1b13;
-  padding: 2rem;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.title {
+#hero h1 {
   font-size: 4rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
-  color: #9ae6b4;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-.scroll-btn {
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  background-color: #1a3d2f;
-  color: #e0e0e0;
+#hero button {
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  background-color: #1f4032;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
+  color: white;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: 0.3s ease;
 }
 
-.scroll-btn:hover {
-  background-color: #2e5a44;
+#hero button:hover {
+  background-color: #2d5c46;
 }
 
-.conteudo {
-  padding: 4rem 2rem;
-  background-color: #16241b;
-  min-height: 100vh;
-  text-align: center;
+/* Secção 2 - Botões */
+#actions .buttons {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 14px 28px;
+  font-size: 1rem;
+  border-radius: 12px;
+  background-color: #1f4032;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-btn:hover {
+  background-color: #2d5c46;
 }
