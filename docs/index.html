@@ -8,26 +8,34 @@
   <link href="https://fonts.googleapis.com/css2?family=Metropolis:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- SECÇÃO 1 -->
   <header class="hero">
     <h1 class="title">Restus</h1>
-    <button onclick="scrollToSection()" class="scroll-btn">Gastar restos</button>
+    <button onclick="scrollToSection('sec2')" class="scroll-btn">Gastar restos</button>
   </header>
 
-  <section id="conteudo" class="conteudo">
+  <!-- SECÇÃO 2 -->
+  <section id="sec2" class="conteudo claro">
     <h2>Aqui vai acontecer a magia...</h2>
     <p>Esta secção será preenchida mais tarde com funcionalidades do teu projeto.</p>
+    <div class="button-row">
+      <button onclick="scrollToSection('sec3')" class="section-btn">Alimentos</button>
+      <button onclick="scrollToSection('sec4')" class="section-btn">Refeições</button>
+    </div>
   </section>
 
-  <section class="conteudo claro">
+  <!-- SECÇÃO 3 -->
+  <section id="sec3" class="conteudo escuro">
     <h2>Adiciona alimentos</h2>
     <div class="input-area">
-      <button onclick="addItem()" class="add-btn">+</button>
       <input type="text" id="alimentoInput" placeholder="Escreve um alimento" />
+      <button onclick="addItem()" class="add-btn">+</button>
     </div>
     <div id="alimentosContainer" class="alimentos-container"></div>
   </section>
 
-  <section class="conteudo">
+  <!-- SECÇÃO 4 -->
+  <section id="sec4" class="conteudo claro">
     <h2>Explora combinações e receitas</h2>
     <p>Esta área será dedicada a sugestões com base nos alimentos que adicionaste.</p>
   </section>
