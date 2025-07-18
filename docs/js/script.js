@@ -1,8 +1,6 @@
 function scrollToSection(id) {
   const section = document.getElementById(id);
-  if (section) {
-    section.scrollIntoView({ behavior: "smooth" });
-  }
+  section.scrollIntoView({ behavior: "smooth" });
 }
 
 function addItem() {
@@ -15,8 +13,8 @@ function addItem() {
   const tag = document.createElement("div");
   tag.className = "tag";
   tag.innerHTML = `
-    ${value}
-    <button class="remove-btn" onclick="removeItem(this)">×</button>
+    <span>${value}</span>
+    <button class="remove-btn" onclick="removeItem(this)">−</button>
   `;
 
   container.appendChild(tag);
