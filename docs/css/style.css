@@ -43,11 +43,38 @@ body {
   padding: 4rem 2rem;
   min-height: 100vh;
   text-align: center;
+}
+
+.claro {
   background-color: #16241b;
 }
 
-.conteudo.claro {
-  background-color: #1f3125;
+.escuro {
+  background-color: #0f1b13;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.section-btn {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  background-color: #1a3d2f;
+  color: #e0e0e0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+  min-width: 150px;
+}
+
+.section-btn:hover {
+  background-color: #2e5a44;
 }
 
 .input-area {
