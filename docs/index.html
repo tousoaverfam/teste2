@@ -5,39 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Restus</title>
   <link rel="stylesheet" href="css/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Metropolis:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Metropolis&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- SECÇÃO 1 -->
+  <!-- Secção 1 -->
   <header class="hero">
     <h1 class="title">Restus</h1>
-    <button onclick="scrollToSection('sec2')" class="scroll-btn">Gastar restos</button>
+    <button onclick="scrollToSection('conteudo')" class="scroll-btn">Gastar restos</button>
   </header>
 
-  <!-- SECÇÃO 2 -->
-  <section id="sec2" class="conteudo claro">
+  <!-- Secção 2 -->
+  <section id="conteudo" class="conteudo">
     <h2>Aqui vai acontecer a magia...</h2>
-    <p>Esta secção será preenchida mais tarde com funcionalidades do teu projeto.</p>
     <div class="button-row">
-      <button onclick="scrollToSection('sec3')" class="section-btn">Alimentos</button>
-      <button onclick="scrollToSection('sec4')" class="section-btn">Refeições</button>
+      <button onclick="scrollToSection('sec3')" class="big-btn">Alimentos</button>
+      <button onclick="scrollToSection('sec4')" class="big-btn">Refeições</button>
     </div>
   </section>
 
-  <!-- SECÇÃO 3 -->
-  <section id="sec3" class="conteudo escuro">
+  <!-- Secção 3 -->
+  <section id="sec3" class="sec3">
     <h2>Adiciona alimentos</h2>
     <div class="input-area">
-      <input type="text" id="alimentoInput" placeholder="Escreve um alimento" />
       <button onclick="addItem()" class="add-btn">+</button>
+      <input type="text" id="alimentoInput" placeholder="Escreve um alimento" />
     </div>
     <div id="alimentosContainer" class="alimentos-container"></div>
   </section>
 
-  <!-- SECÇÃO 4 -->
-  <section id="sec4" class="conteudo claro">
+  <!-- Secção 4 -->
+  <section id="sec4" class="conteudo">
     <h2>Explora combinações e receitas</h2>
-    <p>Esta área será dedicada a sugestões com base nos alimentos que adicionaste.</p>
+    <p>Em breve poderás descobrir receitas criativas com os alimentos que adicionaste!</p>
   </section>
 
   <script src="js/script.js"></script>
