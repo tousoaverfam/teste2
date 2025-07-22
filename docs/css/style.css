@@ -22,42 +22,13 @@ body {
   font-weight: 600;
   margin-bottom: 2rem;
   color: #9ae6b4;
-}
-
-.scroll-btn {
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  background-color: #1a3d2f;
-  color: #e0e0e0;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.scroll-btn:hover {
-  background-color: #2e5a44;
-}
-
-.conteudo {
-  padding: 4rem 2rem;
-  background-color: #16241b;
-  min-height: 100vh;
-  text-align: center;
-}
-
-.sec3 {
-  padding: 4rem 2rem;
-  background-color: #0f1b13;
-  min-height: 100vh;
-  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .button-row {
   display: flex;
   justify-content: center;
   gap: 2rem;
-  margin-top: 2rem;
   flex-wrap: wrap;
 }
 
@@ -69,11 +40,27 @@ body {
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.2);
 }
 
 .big-btn:hover {
   background-color: #2e5a44;
+  transform: translateY(-2px);
+}
+
+.sec2 {
+  padding: 4rem 2rem;
+  background-color: #0f1b13;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.conteudo {
+  padding: 4rem 2rem;
+  background-color: #16241b;
+  min-height: 100vh;
+  text-align: center;
 }
 
 .input-area {
@@ -102,6 +89,7 @@ body {
   border-radius: 12px;
   cursor: pointer;
   transition: background 0.3s;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 .add-btn:hover {
