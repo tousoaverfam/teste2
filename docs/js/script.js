@@ -21,8 +21,8 @@ function addItem() {
 
   const tagWidth = 160;
   const tagHeight = 50;
-  const x = Math.random() * (container.clientWidth - tagWidth);
-  const y = Math.random() * (container.clientHeight - tagHeight);
+  let x = Math.random() * (container.clientWidth - tagWidth);
+  let y = Math.random() * (container.clientHeight - tagHeight);
   tag.style.left = `${x}px`;
   tag.style.top = `${y}px`;
   tag.style.zIndex = zIndexCounter++;
@@ -30,56 +30,70 @@ function addItem() {
   let offsetX = 0, offsetY = 0;
   let velocityX = 0, velocityY = 0;
   let isDragging = false;
+  let lastX = 0, lastY = 0;
 
-  tag.addEventListener("mousedown", (e) => {
-    e.preventDefault();
+  function onMove(e) {
+    if (!isDragging) return;
+
+    const clientX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
+
+    const dx = clientX - lastX;
+    const dy = clientY - lastY;
+
+    velocityX = dx;
+    velocityY = dy;
+
+    let newX = clientX - container.getBoundingClientRect().left - offsetX;
+    let newY = clientY - container.getBoundingClientRect().top - offsetY;
+
+    newX = Math.max(0, Math.min(container.clientWidth - tag.offsetWidth, newX));
+    newY = Math.max(0, Math.min(container.clientHeight - tag.offsetHeight, newY));
+
+    tag.style.left = `${newX}px`;
+    tag.style.top = `${newY}px`;
+
+    lastX = clientX;
+    lastY = clientY;
+  }
+
+  function endDrag() {
+    isDragging = false;
+    tag.classList.remove("dragging");
+    animateInertia(tag, velocityX, velocityY, container);
+    document.removeEventListener("mousemove", onMove);
+    document.removeEventListener("mouseup", endDrag);
+    document.removeEventListener("touchmove", onMove);
+    document.removeEventListener("touchend", endDrag);
+  }
+
+  function startDrag(e) {
     isDragging = true;
+    const clientX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
+
     const rect = tag.getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
+
+    offsetX = clientX - rect.left;
+    offsetY = clientY - rect.top;
+
+    lastX = clientX;
+    lastY = clientY;
 
     tag.classList.add("dragging");
     tag.style.zIndex = zIndexCounter++;
 
-    let lastX = e.clientX;
-    let lastY = e.clientY;
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup", endDrag);
+    document.addEventListener("touchmove", onMove);
+    document.addEventListener("touchend", endDrag);
+  }
 
-    function onMouseMove(e) {
-      if (!isDragging) return;
-
-      const dx = e.clientX - lastX;
-      const dy = e.clientY - lastY;
-
-      velocityX = dx;
-      velocityY = dy;
-
-      let newX = e.clientX - containerRect.left - offsetX;
-      let newY = e.clientY - containerRect.top - offsetY;
-
-      newX = Math.max(0, Math.min(container.clientWidth - tag.offsetWidth, newX));
-      newY = Math.max(0, Math.min(container.clientHeight - tag.offsetHeight, newY));
-
-      tag.style.left = `${newX}px`;
-      tag.style.top = `${newY}px`;
-
-      lastX = e.clientX;
-      lastY = e.clientY;
-    }
-
-    function onMouseUp() {
-      isDragging = false;
-      document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseup", onMouseUp);
-      tag.classList.remove("dragging");
-      animateInertia(tag, velocityX, velocityY, container);
-    }
-
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseup", onMouseUp);
-  });
-
+  tag.addEventListener("mousedown", startDrag);
+  tag.addEventListener("touchstart", startDrag, { passive: false });
   tag.ondragstart = () => false;
+
   container.appendChild(tag);
   input.value = "";
 }
