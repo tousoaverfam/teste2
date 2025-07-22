@@ -1,3 +1,5 @@
+let zIndexCounter = 1;
+
 function scrollToSection(id) {
   const section = document.getElementById(id);
   section.scrollIntoView({ behavior: "smooth" });
@@ -16,13 +18,84 @@ function addItem() {
     <span>${value}</span>
     <button class="remove-btn" onclick="removeItem(this)">−</button>
   `;
-  makeDraggable(tag);
+
+  const tagWidth = 160;
+  const tagHeight = 50;
+  let x = Math.random() * (container.clientWidth - tagWidth);
+  let y = Math.random() * (container.clientHeight - tagHeight);
+  tag.style.left = `${x}px`;
+  tag.style.top = `${y}px`;
+  tag.style.zIndex = zIndexCounter++;
+
+  let offsetX = 0, offsetY = 0;
+  let velocityX = 0, velocityY = 0;
+  let isDragging = false;
+  let lastX = 0, lastY = 0;
+
+  function onMove(e) {
+    if (!isDragging) return;
+
+    const clientX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
+
+    const dx = clientX - lastX;
+    const dy = clientY - lastY;
+
+    velocityX = dx;
+    velocityY = dy;
+
+    let newX = clientX - container.getBoundingClientRect().left - offsetX;
+    let newY = clientY - container.getBoundingClientRect().top - offsetY;
+
+    newX = Math.max(0, Math.min(container.clientWidth - tag.offsetWidth, newX));
+    newY = Math.max(0, Math.min(container.clientHeight - tag.offsetHeight, newY));
+
+    tag.style.left = `${newX}px`;
+    tag.style.top = `${newY}px`;
+
+    lastX = clientX;
+    lastY = clientY;
+  }
+
+  function endDrag() {
+    isDragging = false;
+    tag.classList.remove("dragging");
+    animateInertia(tag, velocityX, velocityY, container);
+    document.removeEventListener("mousemove", onMove);
+    document.removeEventListener("mouseup", endDrag);
+    document.removeEventListener("touchmove", onMove);
+    document.removeEventListener("touchend", endDrag);
+  }
+
+  function startDrag(e) {
+    isDragging = true;
+    const clientX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
+    const clientY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
+
+    const rect = tag.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    offsetX = clientX - rect.left;
+    offsetY = clientY - rect.top;
+
+    lastX = clientX;
+    lastY = clientY;
+
+    tag.classList.add("dragging");
+    tag.style.zIndex = zIndexCounter++;
+
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup", endDrag);
+    document.addEventListener("touchmove", onMove);
+    document.addEventListener("touchend", endDrag);
+  }
+
+  tag.addEventListener("mousedown", startDrag);
+  tag.addEventListener("touchstart", startDrag, { passive: false });
+  tag.ondragstart = () => false;
+
   container.appendChild(tag);
-
   input.value = "";
-
-  // Enviar para Google Sheets
-  enviarParaSheets(value);
 }
 
 function removeItem(btn) {
@@ -30,53 +103,40 @@ function removeItem(btn) {
   tag.remove();
 }
 
-function enviarParaSheets(alimento) {
-  fetch("https://script.google.com/macros/s/AKfycbwpiiNwQkU-lIStF9RqVa8YzwAwX0jhkOl3bYsx4Q9iKovTNNTvj39YYRjh8AqZwHYq/exec", {
-    method: "POST",
-    mode: "no-cors", // Importante para evitar bloqueios de CORS
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ alimento: alimento }),
-  })
-  .then(() => {
-    console.log("Alimento enviado com sucesso:", alimento);
-  })
-  .catch((error) => {
-    console.error("Erro ao enviar o alimento:", error);
-  });
-}
+function animateInertia(tag, vx, vy, container) {
+  let friction = 0.95;
+  let bounce = -0.6;
 
-// Código para arrastar (já existente no teu JS)
-function makeDraggable(el) {
-  el.style.position = "absolute";
-  el.style.left = Math.random() * 80 + "%";
-  el.style.top = Math.random() * 50 + "%";
+  function step() {
+    let x = parseFloat(tag.style.left);
+    let y = parseFloat(tag.style.top);
 
-  let posX = 0, posY = 0, mouseX = 0, mouseY = 0;
-  el.onmousedown = dragMouseDown;
+    vx *= friction;
+    vy *= friction;
 
-  function dragMouseDown(e) {
-    e.preventDefault();
-    el.style.zIndex = Date.now(); // traz para a frente
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    document.onmouseup = closeDragElement;
-    document.onmousemove = elementDrag;
+    x += vx;
+    y += vy;
+
+    const maxX = container.clientWidth - tag.offsetWidth;
+    const maxY = container.clientHeight - tag.offsetHeight;
+
+    if (x <= 0 || x >= maxX) {
+      vx *= bounce;
+      x = Math.max(0, Math.min(maxX, x));
+    }
+
+    if (y <= 0 || y >= maxY) {
+      vy *= bounce;
+      y = Math.max(0, Math.min(maxY, y));
+    }
+
+    tag.style.left = `${x}px`;
+    tag.style.top = `${y}px`;
+
+    if (Math.abs(vx) > 0.5 || Math.abs(vy) > 0.5) {
+      requestAnimationFrame(step);
+    }
   }
 
-  function elementDrag(e) {
-    e.preventDefault();
-    posX = mouseX - e.clientX;
-    posY = mouseY - e.clientY;
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    el.style.top = (el.offsetTop - posY) + "px";
-    el.style.left = (el.offsetLeft - posX) + "px";
-  }
-
-  function closeDragElement() {
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
+  requestAnimationFrame(step);
 }
