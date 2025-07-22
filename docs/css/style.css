@@ -49,16 +49,18 @@ body {
   transform: translateY(-2px);
 }
 
+/* Secção 2: Alimentos */
 .sec2 {
   padding: 4rem 2rem;
-  background-color: #0f1b13;
+  background-color: #16241b;
   min-height: 100vh;
   text-align: center;
 }
 
-.conteudo {
+/* Secção 3: Receitas */
+.sec3 {
   padding: 4rem 2rem;
-  background-color: #16241b;
+  background-color: #0f1b13;
   min-height: 100vh;
   text-align: center;
 }
