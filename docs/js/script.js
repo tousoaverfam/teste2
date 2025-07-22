@@ -17,7 +17,6 @@ function addItem() {
     <button class="remove-btn" onclick="removeItem(this)">−</button>
   `;
 
-  // Posição aleatória dentro do container
   const tagWidth = 160;
   const tagHeight = 50;
   const x = Math.random() * (container.clientWidth - tagWidth);
@@ -26,15 +25,18 @@ function addItem() {
   tag.style.top = `${y}px`;
 
   // Tornar arrastável
+  let offsetX, offsetY;
+
   tag.addEventListener("mousedown", (e) => {
     e.preventDefault();
-    const shiftX = e.clientX - tag.getBoundingClientRect().left;
-    const shiftY = e.clientY - tag.getBoundingClientRect().top;
+    const rect = tag.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
 
-    function moveAt(pageX, pageY) {
-      const containerRect = container.getBoundingClientRect();
-      let newX = pageX - containerRect.left - shiftX;
-      let newY = pageY - containerRect.top - shiftY;
+    function onMouseMove(e) {
+      let newX = e.clientX - containerRect.left - offsetX;
+      let newY = e.clientY - containerRect.top - offsetY;
 
       // Limites
       newX = Math.max(0, Math.min(container.clientWidth - tag.offsetWidth, newX));
@@ -44,15 +46,13 @@ function addItem() {
       tag.style.top = `${newY}px`;
     }
 
-    function onMouseMove(e) {
-      moveAt(e.pageX, e.pageY);
+    function onMouseUp() {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
     }
 
     document.addEventListener("mousemove", onMouseMove);
-
-    document.addEventListener("mouseup", () => {
-      document.removeEventListener("mousemove", onMouseMove);
-    }, { once: true });
+    document.addEventListener("mouseup", onMouseUp);
   });
 
   tag.ondragstart = () => false;
