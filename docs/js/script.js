@@ -18,28 +18,30 @@ function addItem() {
   `;
 
   // Posição aleatória dentro do container
-  const tagWidth = 150;
+  const tagWidth = 160;
   const tagHeight = 50;
-  const x = Math.floor(Math.random() * (container.clientWidth - tagWidth));
-  const y = Math.floor(Math.random() * (container.clientHeight - tagHeight));
+  const x = Math.random() * (container.clientWidth - tagWidth);
+  const y = Math.random() * (container.clientHeight - tagHeight);
   tag.style.left = `${x}px`;
   tag.style.top = `${y}px`;
 
   // Tornar arrastável
-  let offsetX, offsetY;
-
-  tag.onmousedown = function (e) {
+  tag.addEventListener("mousedown", (e) => {
     e.preventDefault();
-    const rect = tag.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
+    const shiftX = e.clientX - tag.getBoundingClientRect().left;
+    const shiftY = e.clientY - tag.getBoundingClientRect().top;
 
     function moveAt(pageX, pageY) {
       const containerRect = container.getBoundingClientRect();
-      const newX = pageX - containerRect.left - offsetX;
-      const newY = pageY - containerRect.top - offsetY;
-      tag.style.left = `${Math.max(0, Math.min(container.clientWidth - tag.offsetWidth, newX))}px`;
-      tag.style.top = `${Math.max(0, Math.min(container.clientHeight - tag.offsetHeight, newY))}px`;
+      let newX = pageX - containerRect.left - shiftX;
+      let newY = pageY - containerRect.top - shiftY;
+
+      // Limites
+      newX = Math.max(0, Math.min(container.clientWidth - tag.offsetWidth, newX));
+      newY = Math.max(0, Math.min(container.clientHeight - tag.offsetHeight, newY));
+
+      tag.style.left = `${newX}px`;
+      tag.style.top = `${newY}px`;
     }
 
     function onMouseMove(e) {
@@ -48,11 +50,10 @@ function addItem() {
 
     document.addEventListener("mousemove", onMouseMove);
 
-    document.onmouseup = function () {
+    document.addEventListener("mouseup", () => {
       document.removeEventListener("mousemove", onMouseMove);
-      document.onmouseup = null;
-    };
-  };
+    }, { once: true });
+  });
 
   tag.ondragstart = () => false;
 
