@@ -1,3 +1,5 @@
+let zIndexCounter = 1;
+
 function scrollToSection(id) {
   const section = document.getElementById(id);
   section.scrollIntoView({ behavior: "smooth" });
@@ -23,6 +25,7 @@ function addItem() {
   const y = Math.random() * (container.clientHeight - tagHeight);
   tag.style.left = `${x}px`;
   tag.style.top = `${y}px`;
+  tag.style.zIndex = zIndexCounter++;
 
   // Tornar arrastável
   let offsetX, offsetY;
@@ -34,11 +37,12 @@ function addItem() {
     offsetX = e.clientX - rect.left;
     offsetY = e.clientY - rect.top;
 
+    tag.style.zIndex = zIndexCounter++;
+
     function onMouseMove(e) {
       let newX = e.clientX - containerRect.left - offsetX;
       let newY = e.clientY - containerRect.top - offsetY;
 
-      // Limites
       newX = Math.max(0, Math.min(container.clientWidth - tag.offsetWidth, newX));
       newY = Math.max(0, Math.min(container.clientHeight - tag.offsetHeight, newY));
 
