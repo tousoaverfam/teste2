@@ -20,9 +20,12 @@
   <!-- Secção 2 -->
   <section id="sec2" class="sec2">
     <h2>O que tens em casa:</h2>
-    <div class="input-area-left">
-      <button onclick="addItem()" class="add-btn">+</button>
-      <input type="text" id="alimentoInput" placeholder="Escreve um alimento" />
+    <div class="input-container">
+      <div class="input-area-left">
+        <button onclick="addItem()" class="add-btn">+</button>
+        <input type="text" id="alimentoInput" placeholder="Escreve um alimento" />
+      </div>
+      <button onclick="scrollToSection('sec3')" class="big-btn view-btn">Ver Receitas Disponíveis</button>
     </div>
     <div id="alimentosContainer" class="alimentos-container"></div>
   </section>
