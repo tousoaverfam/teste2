@@ -114,7 +114,7 @@ body {
   width: 100%;
   height: 70vh;
   margin-top: 2rem;
-  border: 1px dashed rgba(255, 255, 255, 0.1);
+  /* Removido o tracejado */
 }
 
 .tag {
@@ -129,7 +129,6 @@ body {
   font-size: 1.1rem;
   cursor: grab;
   user-select: none;
-  z-index: 2;
 }
 
 .remove-btn {
