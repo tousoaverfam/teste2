@@ -27,12 +27,13 @@ function addItem() {
   tag.style.top = `${y}px`;
   tag.style.zIndex = zIndexCounter++;
 
-  let offsetX, offsetY;
+  let offsetX = 0, offsetY = 0;
   let velocityX = 0, velocityY = 0;
-  let animationFrame;
+  let isDragging = false;
 
   tag.addEventListener("mousedown", (e) => {
     e.preventDefault();
+    isDragging = true;
     const rect = tag.getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
     offsetX = e.clientX - rect.left;
@@ -45,6 +46,8 @@ function addItem() {
     let lastY = e.clientY;
 
     function onMouseMove(e) {
+      if (!isDragging) return;
+
       const dx = e.clientX - lastX;
       const dy = e.clientY - lastY;
 
@@ -65,6 +68,7 @@ function addItem() {
     }
 
     function onMouseUp() {
+      isDragging = false;
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", onMouseUp);
       tag.classList.remove("dragging");
@@ -100,3 +104,25 @@ function animateInertia(tag, vx, vy, container) {
     y += vy;
 
     const maxX = container.clientWidth - tag.offsetWidth;
+    const maxY = container.clientHeight - tag.offsetHeight;
+
+    if (x <= 0 || x >= maxX) {
+      vx *= bounce;
+      x = Math.max(0, Math.min(maxX, x));
+    }
+
+    if (y <= 0 || y >= maxY) {
+      vy *= bounce;
+      y = Math.max(0, Math.min(maxY, y));
+    }
+
+    tag.style.left = `${x}px`;
+    tag.style.top = `${y}px`;
+
+    if (Math.abs(vx) > 0.5 || Math.abs(vy) > 0.5) {
+      requestAnimationFrame(step);
+    }
+  }
+
+  requestAnimationFrame(step);
+}
