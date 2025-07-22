@@ -18,9 +18,9 @@ body {
 }
 
 .title {
-  font-size: 4rem;
+  font-size: 4.5rem; /* Aumentado */
   font-weight: 600;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem; /* Mais espaçamento */
   color: #9ae6b4;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
