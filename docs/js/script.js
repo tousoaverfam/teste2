@@ -1,20 +1,17 @@
+let zIndexCounter = 1;
+
+function scrollToSection(id) {
+  const section = document.getElementById(id);
+  section.scrollIntoView({ behavior: "smooth" });
+}
+
 function addItem() {
   const input = document.getElementById("alimentoInput");
   const value = input.value.trim();
   if (value === "") return;
 
-  // Envia para o Google Sheets
-  fetch("https://script.google.com/macros/s/AKfycbwpiiNwQkU-lIStF9RqVa8YzwAwX0jhkOl3bYsx4Q9iKovTNNTvj39YYRjh8AqZwHYq/exec", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ alimento: value })
-  })
-  .then(response => response.text())
-  .then(data => console.log("Resposta do Sheets:", data))
-  .catch(error => console.error("Erro ao enviar para Sheets:", error));
-
-  // Cria o retângulo visual
   const container = document.getElementById("alimentosContainer");
+
   const tag = document.createElement("div");
   tag.className = "tag";
   tag.innerHTML = `
@@ -99,4 +96,47 @@ function addItem() {
 
   container.appendChild(tag);
   input.value = "";
+}
+
+function removeItem(btn) {
+  const tag = btn.parentElement;
+  tag.remove();
+}
+
+function animateInertia(tag, vx, vy, container) {
+  let friction = 0.95;
+  let bounce = -0.6;
+
+  function step() {
+    let x = parseFloat(tag.style.left);
+    let y = parseFloat(tag.style.top);
+
+    vx *= friction;
+    vy *= friction;
+
+    x += vx;
+    y += vy;
+
+    const maxX = container.clientWidth - tag.offsetWidth;
+    const maxY = container.clientHeight - tag.offsetHeight;
+
+    if (x <= 0 || x >= maxX) {
+      vx *= bounce;
+      x = Math.max(0, Math.min(maxX, x));
+    }
+
+    if (y <= 0 || y >= maxY) {
+      vy *= bounce;
+      y = Math.max(0, Math.min(maxY, y));
+    }
+
+    tag.style.left = `${x}px`;
+    tag.style.top = `${y}px`;
+
+    if (Math.abs(vx) > 0.5 || Math.abs(vy) > 0.5) {
+      requestAnimationFrame(step);
+    }
+  }
+
+  requestAnimationFrame(step);
 }
