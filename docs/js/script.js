@@ -10,6 +10,22 @@ function addItem() {
   const value = input.value.trim();
   if (value === "") return;
 
+  // Enviar para Google Sheets
+  fetch("https://script.google.com/macros/s/AKfycbyUaJQbRh56JZFjSW6NLJ9mZanCq5ghCnyc-vWiZtI/dev", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ alimento: value })
+  })
+  .then(response => response.text())
+  .then(data => console.log("Resposta do Sheets:", data))
+  .catch(error => console.error("Erro ao enviar para Sheets:", error));
+
+  // Criar visualmente o retângulo
+  createTag(value);
+  input.value = "";
+}
+
+function createTag(value) {
   const container = document.getElementById("alimentosContainer");
 
   const tag = document.createElement("div");
@@ -95,7 +111,6 @@ function addItem() {
   tag.ondragstart = () => false;
 
   container.appendChild(tag);
-  input.value = "";
 }
 
 function removeItem(btn) {
