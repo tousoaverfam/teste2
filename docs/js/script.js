@@ -1,5 +1,5 @@
 let zIndexCounter = 1;
-const endpointURL = 'https://script.google.com/macros/s/AKfycbwpiiNwQkU-lIStF9RqVa8YzwAwX0jhkOl3bYsx4Q9iKovTNNTvj39YYRjh8AqZwHYq/exec'; // atualiza se mudares
+const endpointURL = 'https://script.google.com/macros/s/AKfycbyV-9mDh8GKOw8FAbHWJjQPdMB0WVuWCAUUVbAGnpY1Yt6eNTopmVIbc4vIX92jb2cT/exec'; // atualiza se mudares
 
 function scrollToSection(id) {
   const section = document.getElementById(id);
