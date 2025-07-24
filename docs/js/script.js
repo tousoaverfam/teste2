@@ -1,5 +1,4 @@
 let zIndexCounter = 1;
-const endpointURL = 'https://script.google.com/macros/s/AKfycbyV-9mDh8GKOw8FAbHWJjQPdMB0WVuWCAUUVbAGnpY1Yt6eNTopmVIbc4vIX92jb2cT/exec'; // atualiza se mudares
 
 function scrollToSection(id) {
   const section = document.getElementById(id);
@@ -11,8 +10,8 @@ function addItem() {
   const value = input.value.trim();
   if (value === "") return;
 
-  // Adiciona visualmente o item
   const container = document.getElementById("alimentosContainer");
+
   const tag = document.createElement("div");
   tag.className = "tag";
   tag.innerHTML = `
@@ -35,6 +34,7 @@ function addItem() {
 
   function onMove(e) {
     if (!isDragging) return;
+
     const clientX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
     const clientY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
 
@@ -96,18 +96,6 @@ function addItem() {
 
   container.appendChild(tag);
   input.value = "";
-
-  // 🔁 Enviar para o Google Sheets
-  fetch(endpointURL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ alimento: value }),
-  }).catch((error) => {
-    console.error("Erro ao enviar para Sheets:", error);
-  });
 }
 
 function removeItem(btn) {
