@@ -96,6 +96,16 @@ function addItem() {
 
   container.appendChild(tag);
   input.value = "";
+
+  // ENVIA PARA O GOOGLE SHEETS
+  fetch("https://script.google.com/macros/s/AKfycbyV-9mDh8GKOw8FAbHWJjQPdMB0WVuWCAUUVbAGnpY1Yt6eNTopmVIbc4vIX92jb2cT/exec", {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ alimento: value })
+  });
 }
 
 function removeItem(btn) {
