@@ -10,31 +10,6 @@ function addItem() {
   const value = input.value.trim();
   if (value === "") return;
 
-  // Envia o alimento para o Google Apps Script via POST
-  fetch('https://script.google.com/macros/s/AKfycbyrzThm54njpfjR4nuD7AaYa5uxlNrrtJD757xOmC-y5YNoqqgt3N1mhH0LZABgS8KtrQ/exec', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: `alimento=${encodeURIComponent(value)}`
-  })
-  .then(response => response.text())
-  .then(text => {
-    console.log(text);
-    if (text.includes('Adicionado com sucesso')) {
-      // Se tudo ok, adiciona tag localmente e limpa input
-      addLocalTag(value);
-      input.value = "";
-    } else {
-      alert('Erro no servidor: ' + text);
-    }
-  })
-  .catch(err => {
-    alert('Erro de rede: ' + err);
-  });
-}
-
-function addLocalTag(value) {
   const container = document.getElementById("alimentosContainer");
 
   const tag = document.createElement("div");
@@ -120,6 +95,7 @@ function addLocalTag(value) {
   tag.ondragstart = () => false;
 
   container.appendChild(tag);
+  input.value = "";
 }
 
 function removeItem(btn) {
